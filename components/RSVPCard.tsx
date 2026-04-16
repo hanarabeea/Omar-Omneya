@@ -96,7 +96,7 @@ export default function RSVPCard() {
           </div>
 
           {/* Guest Name Input */}
-          <div className="mb-8 text-left">
+          <div className="mb-4 text-left">
             <label htmlFor="guestName" className="block text-sm font-serif italic text-charcoal mb-2">
               To: Guest Name
             </label>
@@ -109,6 +109,39 @@ export default function RSVPCard() {
               className="w-full px-4 py-3 border border-charcoal/20 rounded bg-white text-charcoal placeholder-charcoal/40 focus:outline-none focus:ring-2 focus:ring-olive focus:border-transparent"
             />
           </div>
+
+          {/* Messages */}
+          {submitStatus === 'success' && (
+            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded text-sm text-green-700">
+              ✓ RSVP submitted successfully!
+            </div>
+          )}
+          {submitStatus === 'error' && (
+            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
+              {errorMessage}
+            </div>
+          )}
+
+          {/* Submit Button */}
+          <button
+            onClick={handleSubmit}
+            onTouchEnd={(e) => { if (!isLoading) { e.preventDefault(); handleSubmit(e as any); } }}
+            disabled={isLoading}
+            style={{ minHeight: '44px', touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
+            className="w-full px-6 py-3 bg-charcoal text-white rounded font-serif font-medium tracking-wider uppercase hover:bg-charcoal/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 mb-8"
+          >
+            {isLoading ? (
+              <>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Submitting...
+              </>
+            ) : (
+              <>
+                <Mail className="w-4 h-4" />
+                Submit RSVP
+              </>
+            )}
+          </button>
 
           {/* Hosted By */}
           <div className="mb-8 text-center">
@@ -144,6 +177,9 @@ export default function RSVPCard() {
 
             {/* Venue Link */}
             <div>
+              <p className="text-xs font-serif font-medium tracking-wider uppercase text-charcoal/50 mb-1">
+                Tap for location
+              </p>
               <a
                 href="https://maps.app.goo.gl/BGHcR8yXukaLRm9H7"
                 target="_blank"
@@ -158,38 +194,6 @@ export default function RSVPCard() {
           {/* Divider */}
           <div className="border-t border-charcoal/20 my-8"></div>
 
-          {/* Messages */}
-          {submitStatus === 'success' && (
-            <div className="mb-4 p-3 bg-green-50 border border-green-200 rounded text-sm text-green-700">
-              ✓ RSVP submitted successfully!
-            </div>
-          )}
-          {submitStatus === 'error' && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-sm text-red-700">
-              {errorMessage}
-            </div>
-          )}
-
-          {/* Submit Button */}
-          <button
-            onClick={handleSubmit}
-            onTouchEnd={(e) => { if (!isLoading) { e.preventDefault(); handleSubmit(e as any); } }}
-            disabled={isLoading}
-            style={{ minHeight: '44px', touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}
-            className="w-full px-6 py-3 bg-charcoal text-white rounded font-serif font-medium tracking-wider uppercase hover:bg-charcoal/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Submitting...
-              </>
-            ) : (
-              <>
-                <Mail className="w-4 h-4" />
-                Submit RSVP
-              </>
-            )}
-          </button>
         </div>
       </div>
     </section>
